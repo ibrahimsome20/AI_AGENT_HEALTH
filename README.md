@@ -93,9 +93,9 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`. The browser calls the same origin at `/api/agent/chat`; Next.js rewrites `/api/*` to Express. The rewrite uses `API_PROXY_TARGET=http://localhost:4000` by default. Set `API_PROXY_TARGET` to the backend origin if it runs elsewhere.
+Open `http://localhost:3000`. The browser calls the same origin at `/api/agent/chat`; Next.js rewrites `/api/*` to Express. Set `API_PROXY_TARGET` in `client/.env.local` to the actual backend origin (port `4010` for the current local server `.env`). A safe template is in `client/.env.example`.
 
-For an ngrok HTTP tunnel to the locally running client, start the tunnel with `ngrok http 3000`, then start or restart Next.js with `NGROK_HOST=<your-ngrok-hostname> npm run dev` from `client/`. Use only the hostname in `NGROK_HOST`, without `https://` or a port. Tunnel traffic reaches the client on one origin, and Next.js proxies `/api/*` to the locally running backend.
+For an ngrok HTTP tunnel to the locally running client, start the tunnel with `ngrok http 3000`, put its hostname in `NGROK_HOST` in `client/.env.local`, then start or restart Next.js with `npm run dev` from `client/`. Use only the hostname, without `https://` or a port. If ngrok assigns a new hostname, update the env file and restart Next.js. Tunnel traffic reaches the client on one origin, and Next.js proxies `/api/*` to the locally running backend.
 
 ## API Architecture
 
