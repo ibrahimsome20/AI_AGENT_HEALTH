@@ -93,12 +93,14 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`. The client calls `http://localhost:4000` by default. Override with `NEXT_PUBLIC_API_URL` if needed.
+Open `http://localhost:3000`. The browser calls the same origin at `/api/agent/chat`; Next.js rewrites `/api/*` to Express. The rewrite uses `API_PROXY_TARGET=http://localhost:4000` by default. Set `API_PROXY_TARGET` to the backend origin if it runs elsewhere.
+
+For an ngrok HTTP tunnel to the locally running client, start the tunnel with `ngrok http 3000`, then start or restart Next.js with `NGROK_HOST=<your-ngrok-hostname> npm run dev` from `client/`. Use only the hostname in `NGROK_HOST`, without `https://` or a port. Tunnel traffic reaches the client on one origin, and Next.js proxies `/api/*` to the locally running backend.
 
 ## API Architecture
 
 ```text
-React Chat UI
+React Chat UI (same-origin /api/* through Next.js rewrite)
   -> POST /api/agent/chat
     -> validate + trim input with Zod (100 characters max)
     -> Agent

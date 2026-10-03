@@ -9,7 +9,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import type { AgentResponse, AssistantCopy, Locale, Message, Provider } from "@/types/patient-assistant";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 const CONVERSATION_STORAGE_KEY = "healtrip.conversationId";
 const MAX_MESSAGE_LENGTH = 100;
 
@@ -145,7 +144,7 @@ export default function PatientAssistant() {
 
     try {
       const messageLocale = detectMessageLocale(message, locale);
-      const response = await fetch(`${API_URL}/api/agent/chat`, {
+      const response = await fetch("/api/agent/chat", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ conversationId, message, locale: messageLocale }),
